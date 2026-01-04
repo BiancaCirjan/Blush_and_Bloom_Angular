@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ product.name }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="image-wrapper">
+    <img [src]="'assets/products/' + product.imageUrl" />
+  </div>
+
+  <h2>{{ product.name }}</h2>
+  <p><strong>{{ product.price }} lei</strong></p>
+  <p>{{ product.description }}</p>
+
+  <ion-button expand="block" color="primary" (click)="addToCart()">
+    🛒 Add to Cart
+  </ion-button>
+</ion-content>

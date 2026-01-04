@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>📦 All Orders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="filterOrders()" placeholder="Search by product or customer..."></ion-searchbar>
+
+  <ion-row class="ion-justify-content-between ion-padding">
+    <ion-button (click)="exportToExcel()" color="success" fill="solid">Export to Excel 📊</ion-button>
+    <ion-button (click)="exportToPDF()" color="danger" fill="outline">Export to PDF 📄</ion-button>
+  </ion-row>
+  
+
+  <ion-list *ngIf="filteredOrders.length > 0">
+    <ion-card *ngFor="let order of filteredOrders">
+      <ion-card-header>
+        <ion-card-title>🧾 {{ order.email }}</ion-card-title>
+        <ion-note>{{ order.createdAt?.toDate() | date: 'short' }}</ion-note>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Address:</strong> {{ order.address }}</p>
+        <p><strong>Phone:</strong> {{ order.phone }}</p>
+        <p><strong>Total:</strong> {{ order.totalPrice }} lei</p>
+
+        <ion-list>
+          <ion-item *ngFor="let item of order.items">
+            <ion-label>
+              {{ item.name }} ×{{ item.quantity }} — {{ item.price * item.quantity }} lei
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <ion-card *ngIf="filteredOrders.length === 0">
+    <ion-card-content>
+      <p>No orders found for that search term 💤</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

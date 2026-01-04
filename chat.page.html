@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Bloom Chat 💬</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="chat-container">
+    <div *ngFor="let msg of chatMessages.slice(1)" class="message" [ngClass]="msg.role">
+      <div class="bubble">
+        <span *ngIf="msg.role === 'assistant'"><strong>BloomBot:</strong></span>
+        <span>{{ msg.content }}</span>
+      </div>
+    </div>
+
+    <div *ngIf="isTyping" class="message assistant">
+      <div class="bubble typing">BloomBot is typing...</div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-input [(ngModel)]="userInput" placeholder="Type something..." class="ion-padding"></ion-input>
+    <ion-button slot="end" (click)="sendMessage()">Send</ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>👩‍💼 Customers</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-searchbar
+    [(ngModel)]="searchTerm"
+    (ionInput)="filterUsers()"
+    placeholder="Search by name, email, phone..."
+  ></ion-searchbar>
+
+  <ion-list *ngIf="filteredUsers.length > 0">
+    <ion-card *ngFor="let user of filteredUsers">
+      <ion-card-header>
+        <ion-card-title>{{ user.firstName }} {{ user.lastName }}</ion-card-title>
+        <ion-note>{{ user.email }}</ion-note>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Phone:</strong> {{ user.phoneNumber }}</p>
+        <p><strong>Address:</strong> {{ user.homeAddress }}</p>
+        <p><strong>Role:</strong> {{ user.role }}</p>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <ion-card *ngIf="filteredUsers.length === 0">
+    <ion-card-content>
+      <p>No matching customers found 💤</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

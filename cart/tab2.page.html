@@ -1,0 +1,46 @@
+<!-- src/app/tab2/tab2.page.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Shopping Cart</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Check if cart has items -->
+  <div *ngIf="cartItems.length === 0" class="no-items">
+    <p>Your cart is empty</p>
+  </div>
+
+  <!-- Display Cart Items -->
+  <ion-list *ngIf="cartItems.length > 0">
+    <ion-item *ngFor="let item of cartItems">
+      <ion-thumbnail slot="start">
+        <img [src]="'assets/products/' + item.imageUrl" alt="{{ item.name }}" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ item.name }}</h2>
+        <p><strong>Price:</strong> {{ item.price }} lei</p>
+        <p>
+          <strong>Quantity:</strong>
+          <ion-button (click)="item.quantity = item.quantity - 1" [disabled]="item.quantity <= 1">-</ion-button>
+          {{ item.quantity }}
+          <ion-button (click)="item.quantity = item.quantity + 1">+</ion-button>
+        </p>
+      </ion-label>
+      <ion-button fill="clear" color="danger" (click)="removeFromCart(item.productId)">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <!-- Display Total Price -->
+  <ion-footer>
+    <ion-toolbar>
+      <ion-title>Total: {{ getTotalPrice() }} lei</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="checkout()">Checkout</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>
+ 

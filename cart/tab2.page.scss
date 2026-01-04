@@ -1,0 +1,30 @@
+// src/app/cart/cart.component.scss
+ion-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  ion-thumbnail {
+    max-width: 80px;
+    max-height: 80px;
+  }
+  
+  ion-label {
+    flex: 1;
+  }
+  
+  .no-items {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.2em;
+  }
+  
+  ion-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f4f5f8;
+    padding: 10px;
+  }
+  

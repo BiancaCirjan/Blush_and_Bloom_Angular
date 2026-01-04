@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Products 🛍️</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Dropdown to select category -->
+  <ion-item>
+    <ion-label>Select Category</ion-label>
+    <ion-select placeholder="All" [(ngModel)]="selectedCategory" (ionChange)="onCategoryChange($event)">
+      <ion-select-option *ngFor="let category of categories" [value]="category.name">
+        {{ category.name }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Display Products -->
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let product of products" size="6" size-md="4" size-lg="2">
+        <ion-card class="product-card" (click)="openProductModal(product)">
+          <div class="image-wrapper">
+            <img [src]="'assets/products/' + product.imageUrl" alt="Product Image" />
+          </div>
+        
+          <ion-card-header>
+            <ion-card-title>{{ product.name }}</ion-card-title>
+            <ion-card-subtitle>{{ product.price }} lei</ion-card-subtitle>
+            <ion-card-subtitle>{{ product.categoryId }}</ion-card-subtitle>
+          </ion-card-header>
+        
+  
+          <ion-card-content>
+            <h2>Click for details</h2>
+            <ion-button fill="clear" (click)="addToCart(product); $event.stopPropagation()" *ngIf="product.stock > 0">
+              🛒
+            </ion-button>            
+            <ion-button fill="clear" disabled *ngIf="product.stock === 0">
+              Out of Stock
+            </ion-button>
+            <!-- <ion-button fill="clear" *ngIf="product.stock > 0">
+              ♥️
+            </ion-button> -->
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+</ion-content>

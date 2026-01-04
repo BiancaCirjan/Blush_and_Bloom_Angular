@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>MyBloom 🌸</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Admin Panel -->
+  <ion-card *ngIf="isAdmin">
+    <ion-card-header>
+      <ion-card-title>Admin Panel 🛠️</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+
+      <!-- Add Category -->
+      <ion-button expand="block" color="secondary" (click)="openCategoryModal()">➕ Add New Category</ion-button>
+
+      <hr />
+
+      <ion-button expand="block" color="secondary" (click)="openProductModal()">➕ Add New Product</ion-button>
+      <hr />
+      <ion-button expand="block" color="secondary" (click)="navigateToOrders()">🧾 List Orders</ion-button>
+      <hr />
+      <ion-button expand="block" color="secondary" (click)="navigateToCustomers()">👩🏻‍🤝‍👩🏼 List Customers</ion-button>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- User Info -->
+  <ion-card *ngIf="isAuthenticated">
+    <ion-card-header>
+      <ion-card-title>User Information</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>First Name:</strong> {{ userData?.firstName }}</p>
+      <p><strong>Last Name:</strong> {{ userData?.lastName }}</p>
+      <p><strong>Phone Number:</strong> {{ userData?.phoneNumber }}</p>
+      <p><strong>Email:</strong> {{ userData?.email }}</p>
+      <p><strong>Home Address:</strong> {{ userData?.homeAddress }}</p>
+      <ion-button expand="full" (click)="logout()">Logout</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Orders -->
+  <ion-card *ngIf="isAuthenticated && !isAdmin && orders.length > 0">
+    <ion-card-header>
+      <ion-card-title>My Orders</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let order of orders">
+          <ion-label>
+            <h3>🧾 {{ order.createdAt?.toDate() | date:'short' }}</h3>
+            <p><strong>Total:</strong> {{ order.totalPrice }} lei</p>
+            <ul>
+              <li *ngFor="let item of order.items">
+                {{ item.name }} x{{ item.quantity }} - {{ item.price * item.quantity }} lei
+              </li>
+            </ul>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="isAuthenticated && !isAdmin">
+    <ion-card-header>
+      <ion-card-title>My BloomProfile 🌷</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button (click)="editDescription()">Edit Description</ion-button>
+      <ion-button (click)="router.navigate(['tabs/tab3/chat'])" *ngIf="userData?.description">Start Chatting</ion-button>
+      <div *ngIf="userData?.description">
+        <p style="margin-top: 1rem;"><strong>Description:</strong></p>
+        <p>{{ userData.description }}</p>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+
+  <!-- No orders -->
+  <ion-card *ngIf="isAuthenticated && !isAdmin && orders.length === 0">
+    <ion-card-content>
+      <p>No orders found 💤</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Not logged in -->
+  <ion-card *ngIf="!isAuthenticated">
+    <ion-card-header>
+      <ion-card-title>Please log in to access the User Component</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="full" (click)="navigateToLogin()">Go to Login</ion-button>
+    </ion-card-content>
+    <ion-button expand="full" color="secondary" (click)="navigateToRegister()">Register</ion-button>
+  </ion-card>
+</ion-content>
